@@ -34,6 +34,11 @@
   --shadow:0 22px 50px -28px rgba(51,16,26,.55);
 
   --ease:cubic-bezier(.16,1,.3,1);
+
+  /* colores por defecto de las caritas (para las del mural y stats,
+     que no están dentro de un .face). Sin esto el SVG cae a negro. */
+  --face-bg:var(--beige-100);
+  --face-ink:var(--bordo-600);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -442,7 +447,7 @@ const USE_FIREBASE = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("P
    Las que existan se usan solas; si no hay ninguna, el sitio igual luce
    bien con un fondo bordó. Podés agregar/quitar nombres de esta lista.
    ===================================================================== */
-const PHOTO_FILES = ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg","fotos/foto4.jpg","fotos/foto5.jpg","fotos/foto6.jpg"];
+const PHOTO_FILES = ["foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg","foto5.jpg","foto7.jpg","foto8.jpg"];
 
 /* =====================================================================
    3) EMOCIONES (caritas dibujadas en beige + bordó, sin emojis reales)
@@ -776,10 +781,10 @@ else{
 =========================================================================
  CÓMO SUBIR LAS FOTOS
 =========================================================================
- En GitHub: botón "Add file" > "Upload files". Arrastrá tus fotos y, en el
- nombre, poné  fotos/foto1.jpg ,  fotos/foto2.jpg , etc. (eso crea la
- carpeta "fotos"). Usá .jpg . Si querés más de 6, agregá los nombres en
- la lista PHOTO_FILES de arriba.
+ En GitHub: botón "Add file" > "Upload files". Subí tus fotos .jpg al repo
+ (donde está index.html). Los nombres que use la web están en la lista
+ PHOTO_FILES de arriba (hoy: foto1..foto5, foto7, foto8). Si agregás o
+ renombrás fotos, actualizá esa lista para que coincidan los nombres.
 =========================================================================
 -->
 </body>
