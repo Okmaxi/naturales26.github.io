@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Naturales '26 — Mural de ánimo</title>
+<meta name="description" content="El mural de ánimo de la Promo 2026, curso de Naturales. Cada día contá cómo te sentís y mirá cómo está el curso." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* =========================================================
+   NATURALES '26 — paleta exclusiva beige + bordó
+   ========================================================= */
+:root{
+  --beige-50:#f7f0e3;
+  --beige-100:#efe6d4;
+  --beige-200:#e5d8c0;
+  --beige-300:#d8c6a8;
+  --beige-400:#c7b28d;
+
+  --bordo-900:#33101a;
+  --bordo-800:#491521;
+  --bordo-700:#5f1c2a;
+  --bordo-600:#762434;   /* primario */
+  --bordo-500:#8c3344;
+  --bordo-400:#a55a64;   /* rosa apagado */
+
+  --ink:#2b1216;
+  --paper:var(--beige-50);
+  --line:rgba(118,36,52,.14);
+  --shadow:0 22px 50px -28px rgba(51,16,26,.55);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Outfit",system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.55;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+.serif{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto}
+.hidden{display:none !important}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea{font-family:inherit}
+a{color:inherit}
+::selection{background:var(--bordo-600);color:var(--beige-50)}
+
+/* ---------- fondo: blobs orgánicos beige/bordó ---------- */
+.bg-field{position:fixed;inset:0;z-index:-2;overflow:hidden;background:
+  radial-gradient(120% 90% at 80% -10%, var(--beige-100), var(--paper) 55%)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform}
+.blob.b1{width:48vw;height:48vw;left:-12vw;top:-10vw;
+  background:radial-gradient(circle,var(--bordo-400),transparent 65%);animation:drift1 26s var(--ease) infinite alternate}
+.blob.b2{width:40vw;height:40vw;right:-10vw;bottom:-12vw;
+  background:radial-gradient(circle,var(--beige-400),transparent 62%);opacity:.7;animation:drift2 32s var(--ease) infinite alternate}
+@keyframes drift1{to{transform:translate3d(8vw,6vh,0) scale(1.15)}}
+@keyframes drift2{to{transform:translate3d(-7vw,-5vh,0) scale(1.1)}}
+
+/* ---------- grano fino fijo ---------- */
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* =========================== NAV =========================== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(20px,5vw,56px);transition:background .5s var(--ease),backdrop-filter .5s var(--ease)}
+.nav.scrolled{background:rgba(247,240,227,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-brand{font-family:"Fraunces",serif;font-weight:600;font-size:1.05rem;letter-spacing:-.01em;display:flex;align-items:center;gap:.5rem}
+.nav-brand .dot{width:8px;height:8px;border-radius:50%;background:var(--bordo-600);box-shadow:0 0 0 4px rgba(118,36,52,.15);animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(118,36,52,.15)}50%{box-shadow:0 0 0 8px rgba(118,36,52,0)}}
+.pill{display:inline-flex;align-items:center;gap:.55rem;padding:.5rem .9rem;border-radius:999px;font-size:.85rem;font-weight:500;
+  background:var(--bordo-600);color:var(--beige-50);transition:transform .3s var(--ease),background .3s}
+.pill:hover{background:var(--bordo-700)}
+.pill:active{transform:scale(.97)}
+.pill.ghost{background:transparent;color:var(--bordo-700);border:1px solid var(--line)}
+.pill.ghost:hover{background:rgba(118,36,52,.06)}
+.userpill{display:flex;align-items:center;gap:.6rem}
+.userpill .av{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.72rem;font-weight:700;background:var(--beige-200);color:var(--bordo-700)}
+
+/* =========================== HERO =========================== */
+.hero{position:relative;min-height:100dvh;display:flex;align-items:flex-end;overflow:hidden}
+.hero-photos{position:absolute;inset:0;z-index:0}
+.hero-photos img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);
+  transition:opacity 1.8s var(--ease);will-change:opacity,transform}
+.hero-photos img.active{opacity:1;animation:kenburns 9s ease-out forwards}
+@keyframes kenburns{from{transform:scale(1.12)}to{transform:scale(1)}}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(51,16,26,.34) 0%,rgba(51,16,26,.12) 30%,rgba(51,16,26,.6) 78%,rgba(51,16,26,.9) 100%)}
+.hero.no-photos{background:
+  radial-gradient(140% 120% at 75% 0%, var(--bordo-700), var(--bordo-900) 70%)}
+.hero.no-photos::after{background:linear-gradient(180deg,transparent,rgba(51,16,26,.5))}
+
+.hero-inner{position:relative;z-index:2;width:100%;max-width:1400px;margin:0 auto;
+  padding:0 clamp(20px,5vw,56px) clamp(48px,9vh,110px)}
+.eyebrow{display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--beige-200);margin-bottom:1.1rem;opacity:0;transform:translateY(18px);animation:rise .9s var(--ease) .25s forwards}
+.hero h1{font-family:"Fraunces",serif;color:var(--beige-50);font-weight:600;line-height:.86;letter-spacing:-.025em;
+  font-size:clamp(4.2rem,17vw,15rem);text-shadow:0 14px 40px rgba(51,16,26,.5)}
+.hero h1 .l{display:inline-block;opacity:0;transform:translateY(40%) rotate(3deg);animation:rise .85s var(--ease) forwards}
+.hero h1 .year{font-style:italic;font-weight:400;color:var(--beige-300);margin-left:.12em}
+.hero .tagline{max-width:46ch;color:var(--beige-100);font-size:clamp(1rem,1.5vw,1.18rem);margin-top:1.4rem;
+  opacity:0;transform:translateY(18px);animation:rise .9s var(--ease) .9s forwards}
+.hero-cta{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap;opacity:0;transform:translateY(18px);animation:rise .9s var(--ease) 1.05s forwards}
+.btn-lg{display:inline-flex;align-items:center;gap:.6rem;padding:.95rem 1.8rem;border-radius:999px;font-weight:600;font-size:1rem;
+  background:var(--beige-50);color:var(--bordo-700);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.btn-lg:hover{box-shadow:0 16px 34px -14px rgba(0,0,0,.5)}
+.btn-lg:active{transform:translateY(1px) scale(.99)}
+.btn-lg .arrow{transition:transform .35s var(--ease)}
+.btn-lg:hover .arrow{transform:translateX(4px)}
+.btn-outline{display:inline-flex;align-items:center;padding:.95rem 1.6rem;border-radius:999px;font-weight:500;
+  color:var(--beige-50);border:1px solid rgba(247,240,227,.4);transition:background .3s}
+.btn-outline:hover{background:rgba(247,240,227,.12)}
+@keyframes rise{to{opacity:1;transform:none}}
+
+.scrollcue{position:absolute;left:50%;bottom:22px;z-index:3;transform:translateX(-50%);color:var(--beige-100);
+  font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:.8}
+.scrollcue .bar{width:1px;height:34px;background:linear-gradient(var(--beige-100),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:scaleY(.4);transform-origin:top}50%{transform:scaleY(1)}}
+
+/* =========================== SECCIONES =========================== */
+.section{max-width:1400px;margin:0 auto;padding:clamp(64px,11vh,140px) clamp(20px,5vw,56px)}
+.kicker{font-size:.78rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--bordo-500);margin-bottom:.9rem}
+.h-section{font-family:"Fraunces",serif;font-weight:500;letter-spacing:-.02em;line-height:1;font-size:clamp(2.4rem,5.5vw,4.4rem)}
+.lead{color:var(--bordo-700);opacity:.8;max-width:62ch;margin-top:1rem;font-size:1.05rem}
+
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- LOGIN ---------- */
+.app{display:grid;gap:clamp(28px,4vw,52px)}
+.card{background:linear-gradient(180deg,rgba(247,240,227,.9),rgba(239,230,212,.78));
+  border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),var(--shadow)}
+.login-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,3vw,40px);align-items:stretch}
+.login-art{position:relative;border-radius:30px;overflow:hidden;min-height:340px;
+  background:radial-gradient(130% 120% at 20% 10%,var(--bordo-600),var(--bordo-900));color:var(--beige-50);
+  padding:clamp(28px,4vw,44px);display:flex;flex-direction:column;justify-content:space-between}
+.login-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.28;mix-blend-mode:luminosity}
+.login-art .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(51,16,26,.2),rgba(51,16,26,.85))}
+.login-art > *{position:relative;z-index:1}
+.login-art h3{font-family:"Fraunces",serif;font-size:clamp(1.8rem,3.6vw,2.8rem);font-weight:500;line-height:1.02;letter-spacing:-.02em}
+.login-art p{color:var(--beige-200);max-width:34ch;margin-top:.8rem}
+.login-form{padding:clamp(26px,4vw,46px);display:flex;flex-direction:column;justify-content:center}
+.login-form h3{font-family:"Fraunces",serif;font-size:1.9rem;font-weight:500;letter-spacing:-.01em}
+.field{display:flex;flex-direction:column;gap:.5rem;margin-top:1.3rem}
+.field label{font-size:.82rem;font-weight:600;letter-spacing:.04em;color:var(--bordo-700)}
+.field .help{font-size:.78rem;color:var(--bordo-500);opacity:.85}
+.input{width:100%;padding:.95rem 1.05rem;border-radius:15px;border:1px solid var(--line);background:rgba(255,255,255,.6);
+  color:var(--ink);font-size:1rem;transition:border-color .3s,box-shadow .3s,background .3s}
+.input::placeholder{color:rgba(43,18,22,.4)}
+.input:focus{outline:none;border-color:var(--bordo-500);background:rgba(255,255,255,.9);box-shadow:0 0 0 4px rgba(118,36,52,.12)}
+.btn-solid{margin-top:1.5rem;padding:1rem 1.4rem;border-radius:15px;font-weight:600;font-size:1rem;background:var(--bordo-600);color:var(--beige-50);
+  transition:transform .3s var(--ease),background .3s var(--ease)}
+.btn-solid:hover{background:var(--bordo-700)}
+.btn-solid:active{transform:translateY(1px) scale(.99)}
+.btn-solid:disabled{opacity:.6;cursor:wait}
+.form-error{margin-top:.9rem;font-size:.86rem;color:var(--bordo-600);min-height:1.1em;font-weight:500}
+.form-hint{margin-top:1.1rem;font-size:.82rem;color:var(--bordo-500);opacity:.85}
+
+/* ---------- BOARD ---------- */
+.board-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem;
+  padding-bottom:1.4rem;border-bottom:1px solid var(--line)}
+.board-head .greet{font-family:"Fraunces",serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:500;letter-spacing:-.02em;line-height:1}
+.board-head .date{color:var(--bordo-500);font-size:.95rem;text-transform:capitalize;margin-top:.4rem}
+.mode-badge{font-size:.72rem;letter-spacing:.06em;color:var(--bordo-500);border:1px solid var(--line);
+  padding:.35rem .7rem;border-radius:999px;display:inline-flex;align-items:center;gap:.45rem}
+.mode-badge .d{width:7px;height:7px;border-radius:50%;background:var(--bordo-400)}
+.mode-badge.live .d{background:#2f7d4f}
+
+/* composer */
+.composer{margin-top:2.2rem}
+.composer .q{font-family:"Fraunces",serif;font-size:1.5rem;font-weight:500;letter-spacing:-.01em;margin-bottom:1.4rem}
+.faces{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.6vw,20px)}
+.face{--face-bg:var(--beige-100);--face-ink:var(--bordo-600);
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:.9rem .4rem;border-radius:20px;
+  border:1px solid transparent;transition:transform .35s var(--ease),background .35s var(--ease),border-color .35s var(--ease)}
+.face:hover{transform:translateY(-5px);background:rgba(255,255,255,.45)}
+.face:active{transform:translateY(-1px) scale(.97)}
+.face.is-selected{--face-bg:var(--bordo-600);--face-ink:var(--beige-50);
+  background:rgba(118,36,52,.08);border-color:var(--bordo-400);transform:translateY(-5px)}
+.face .face-ring{width:100%;max-width:84px;aspect-ratio:1;border-radius:50%;transition:box-shadow .35s var(--ease)}
+.face.is-selected .face-ring{box-shadow:0 14px 26px -12px rgba(118,36,52,.6),0 0 0 4px rgba(118,36,52,.18)}
+.face-svg{width:100%;height:100%;display:block}
+.face-svg .f-bg{fill:var(--face-bg);transition:fill .35s var(--ease)}
+.face-svg .f-line{fill:none;stroke:var(--face-ink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .35s var(--ease)}
+.face-svg .f-dot{fill:var(--face-ink);transition:fill .35s var(--ease)}
+.face-svg .f-cheek{fill:var(--bordo-400);opacity:.3}
+.face-svg .f-drop{fill:var(--bordo-500)}
+.face.is-selected .face-svg .f-cheek{fill:var(--beige-100);opacity:.45}
+.face.is-selected .face-svg .f-drop{fill:var(--beige-100)}
+.face .lbl{font-size:.82rem;font-weight:600;color:var(--bordo-700)}
+.face.is-selected .lbl{color:var(--bordo-600)}
+.float{animation:float 5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+.comment-row{margin-top:1.8rem;display:grid;gap:.5rem}
+.comment-row label{font-size:.82rem;font-weight:600;color:var(--bordo-700)}
+textarea.input{resize:none;min-height:84px;line-height:1.5}
+.char{font-size:.74rem;color:var(--bordo-500);text-align:right}
+.composer-actions{margin-top:1.4rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.composer-actions .btn-solid{margin-top:0}
+.composer-status{font-size:.86rem;color:var(--bordo-500)}
+.composer-status.warn{color:var(--bordo-600);font-weight:600}
+
+/* stats */
+.stats{margin-top:.6rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.stat{display:inline-flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--bordo-700);
+  border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem .35rem .4rem}
+.stat .mini{width:24px;height:24px}
+.stat b{font-weight:700}
+
+/* wall */
+.wall-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:clamp(12px,1.6vw,20px)}
+.mood{position:relative;background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:22px;padding:1.2rem 1.2rem 1.3rem;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.mood:hover{transform:translateY(-4px);box-shadow:0 20px 34px -22px rgba(51,16,26,.5)}
+.mood.mine{border-color:var(--bordo-400);background:rgba(118,36,52,.06)}
+.mood.mine::after{content:"vos";position:absolute;top:14px;right:14px;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--beige-50);background:var(--bordo-600);padding:.18rem .5rem;border-radius:999px}
+.mood-top{display:flex;align-items:center;gap:.75rem}
+.mood .mini{width:46px;height:46px;flex:none}
+.mood .who{min-width:0}
+.mood .who .nm{font-weight:600;font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mood .who .em{font-size:.8rem;color:var(--bordo-500)}
+.mood .cmt{margin-top:.9rem;font-size:.94rem;color:var(--ink);opacity:.9;
+  border-top:1px dashed var(--line);padding-top:.8rem}
+.mood .time{margin-top:.7rem;font-size:.72rem;color:var(--bordo-400);letter-spacing:.04em}
+.mood-enter{animation:popin .5s var(--ease)}
+@keyframes popin{from{opacity:0;transform:scale(.9) translateY(10px)}to{opacity:1;transform:none}}
+
+.state{padding:2.6rem 1.5rem;text-align:center;border:1px dashed var(--line);border-radius:22px;color:var(--bordo-500)}
+.state .ic{width:64px;height:64px;margin:0 auto 1rem}
+.state h4{font-family:"Fraunces",serif;font-weight:500;font-size:1.4rem;color:var(--bordo-700);margin-bottom:.4rem}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.skel{height:120px;border-radius:22px;background:linear-gradient(100deg,rgba(216,198,168,.25) 30%,rgba(216,198,168,.55) 50%,rgba(216,198,168,.25) 70%);
+  background-size:200% 100%;animation:shimmer 1.5s infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* =========================== GALERÍA =========================== */
+.gallery{padding-top:0}
+.marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;gap:18px;width:max-content;animation:marquee 42s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track img{height:clamp(180px,26vw,300px);border-radius:20px;object-fit:cover;border:1px solid var(--line)}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* =========================== FOOTER =========================== */
+footer{border-top:1px solid var(--line);margin-top:clamp(40px,8vh,90px)}
+.foot{max-width:1400px;margin:0 auto;padding:42px clamp(20px,5vw,56px);display:flex;flex-wrap:wrap;gap:1rem;
+  align-items:center;justify-content:space-between;color:var(--bordo-500);font-size:.86rem}
+.foot .serif{font-size:1.3rem;color:var(--bordo-700)}
+
+/* =========================== TOAST =========================== */
+.toast{position:fixed;left:50%;bottom:28px;z-index:80;transform:translate(-50%,140%);background:var(--bordo-700);color:var(--beige-50);
+  padding:.85rem 1.3rem;border-radius:999px;font-weight:500;font-size:.92rem;box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:.6rem;transition:transform .5s var(--ease)}
+.toast.show{transform:translate(-50%,0)}
+
+/* =========================== RESPONSIVE =========================== */
+@media (max-width:880px){
+  .login-wrap{grid-template-columns:1fr}
+  .login-art{min-height:220px}
+  .faces{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:560px){
+  .nav{padding:14px 18px}
+  .faces{grid-template-columns:repeat(3,1fr);gap:8px}
+  .face{padding:.6rem .2rem}
+  .wall{grid-template-columns:1fr 1fr;gap:10px}
+  .mood{padding:.9rem}
+  .mood .mini{width:38px;height:38px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.01s !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="bg-field"><span class="blob b1"></span><span class="blob b2"></span></div>
+<div class="grain"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="nav-brand"><span class="dot"></span>Naturales <span class="serif" style="font-style:italic">'26</span></div>
+  <div id="navRight">
+    <button class="pill ghost" id="navEnter">Entrar</button>
+    <div class="userpill hidden" id="navUser">
+      <span class="av" id="navAv">N</span>
+      <span id="navName" style="font-size:.88rem;font-weight:600"></span>
+      <button class="pill ghost" id="navLogout" style="padding:.35rem .7rem">Salir</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero no-photos" id="hero">
+  <div class="hero-photos" id="heroPhotos"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">Promo 2026 · Curso de Naturales</span>
+    <h1 class="serif" id="heroTitle"></h1>
+    <p class="tagline">El mural de ánimo de nuestra promo. Cada día elegí cómo te sentís y mirá, de un vistazo, cómo viene el curso. Sin vueltas, entre nosotros.</p>
+    <div class="hero-cta">
+      <button class="btn-lg" id="heroCta">Entrar al mural <span class="arrow">&#8594;</span></button>
+      <a class="btn-outline" href="#galeria">Ver la promo</a>
+    </div>
+  </div>
+  <div class="scrollcue"><span>scroll</span><span class="bar"></span></div>
+</header>
+
+<!-- ============ APP ============ -->
+<section class="section app" id="app">
+
+  <!-- LOGIN -->
+  <div id="loginCard" class="reveal">
+    <div class="kicker">Tu lugar en el mural</div>
+    <h2 class="h-section serif">Entrá con tu nombre.</h2>
+    <p class="lead">No hace falta email ni contraseña complicada. Poné tu nombre como te conocen en el curso. Si querés que nadie use tu nombre, agregale un PIN.</p>
+
+    <div class="card login-wrap" style="margin-top:2.2rem">
+      <div class="login-art">
+        <img id="loginArtImg" alt="" />
+        <div class="veil"></div>
+        <div>
+          <div class="eyebrow" style="color:var(--beige-300);animation:none;opacity:1;transform:none">Promo 2026</div>
+          <h3 class="serif">Cómo se<br/>siente Naturales,<br/>todos los días.</h3>
+        </div>
+        <p>Un emoji, un comentario opcional, y listo. El curso entero en una sola pantalla.</p>
+      </div>
+
+      <form class="login-form" id="loginForm" autocomplete="off">
+        <h3 class="serif">Identificate</h3>
+        <div class="field">
+          <label for="nameInput">Tu nombre</label>
+          <input class="input" id="nameInput" type="text" placeholder="Ej: Cata, Mateo, Tati..." maxlength="28" />
+        </div>
+        <div class="field" id="pinRow">
+          <label for="pinInput">PIN (opcional)</label>
+          <input class="input" id="pinInput" type="password" inputmode="numeric" placeholder="4 dígitos, si querés protegerlo" maxlength="6" />
+          <span class="help">Si ya creaste tu usuario con PIN, ingresalo para entrar.</span>
+        </div>
+        <button class="btn-solid" type="submit" id="loginBtn">Entrar</button>
+        <div class="form-error" id="loginError"></div>
+        <p class="form-hint" id="loginHint"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- BOARD -->
+  <div id="board" class="hidden">
+    <div class="board-head">
+      <div>
+        <div class="greet serif" id="greet">Hola</div>
+        <div class="date" id="todayDate"></div>
+      </div>
+      <span class="mode-badge" id="modeBadge"><span class="d"></span><span id="modeText">conectando…</span></span>
+    </div>
+
+    <!-- composer -->
+    <div class="composer reveal">
+      <div class="q serif">¿Cómo te sentís hoy?</div>
+      <div class="faces" id="faces"></div>
+
+      <div class="comment-row">
+        <label for="commentInput">Dejá un comentario (opcional)</label>
+        <textarea class="input" id="commentInput" maxlength="160" placeholder="Contá un poco más... o dejalo en blanco."></textarea>
+        <div class="char"><span id="charCount">0</span>/160</div>
+      </div>
+
+      <div class="composer-actions">
+        <button class="btn-solid" id="saveBtn">Guardar mi ánimo</button>
+        <span class="composer-status" id="composerStatus"></span>
+      </div>
+    </div>
+
+    <!-- wall -->
+    <div class="reveal" style="margin-top:clamp(40px,7vh,80px)">
+      <div class="wall-head">
+        <div>
+          <div class="kicker">Hoy en el curso</div>
+          <h3 class="h-section serif" style="font-size:clamp(1.9rem,4vw,3rem)">El mural de hoy</h3>
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div id="wallArea" style="margin-top:1.6rem">
+        <div class="skel-grid" id="wallSkeleton">
+          <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
+        </div>
+        <div class="wall hidden" id="wall"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERÍA ============ -->
+<section class="section gallery hidden" id="galeria">
+  <div class="kicker">La promo</div>
+  <h2 class="h-section serif">Nosotros, todos juntos.</h2>
+  <div class="marquee reveal" style="margin-top:2.4rem"><div class="marquee-track" id="galleryTrack"></div></div>
+</section>
+
+<footer>
+  <div class="foot">
+    <span class="serif">Naturales '26</span>
+    <span>Promo 2026 · Hecho por y para el curso.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><span id="toastText"></span></div>
+
+<script type="module">
+/* =====================================================================
+   1) CONFIGURACIÓN DE FIREBASE  —  PEGÁ ACÁ TUS DATOS
+   ---------------------------------------------------------------------
+   Mientras tenga "PEGA_..." el sitio funciona en modo DEMO (solo este
+   dispositivo). Cuando pegues tus claves reales, pasa a modo COMPARTIDO
+   (todos ven los ánimos de todos, en tiempo real).
+   Instrucciones paso a paso al final del archivo.
+   ===================================================================== */
+const firebaseConfig = {
+  apiKey: "PEGA_TU_API_KEY",
+  authDomain: "PEGA_TU_PROYECTO.firebaseapp.com",
+  projectId: "PEGA_TU_PROYECTO",
+  storageBucket: "PEGA_TU_PROYECTO.appspot.com",
+  messagingSenderId: "PEGA_TU_SENDER_ID",
+  appId: "PEGA_TU_APP_ID"
+};
+const USE_FIREBASE = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("PEGA");
+
+/* =====================================================================
+   2) FOTOS DEL CURSO
+   Subí tus fotos a una carpeta "fotos/" con estos nombres.
+   Las que existan se usan solas; si no hay ninguna, el sitio igual luce
+   bien con un fondo bordó. Podés agregar/quitar nombres de esta lista.
+   ===================================================================== */
+const PHOTO_FILES = ["fotos/foto1.jpg","fotos/foto2.jpg","fotos/foto3.jpg","fotos/foto4.jpg","fotos/foto5.jpg","fotos/foto6.jpg"];
+
+/* =====================================================================
+   3) EMOCIONES (caritas dibujadas en beige + bordó, sin emojis reales)
+   ===================================================================== */
+const EMO = {
+  feliz:      { label:"Feliz" },
+  tranqui:    { label:"Tranqui" },
+  masomenos:  { label:"Más o menos" },
+  triste:     { label:"Triste" },
+  preocupado: { label:"Preocupado" },
+  cansado:    { label:"Cansado" }
+};
+const EMO_ORDER = ["feliz","tranqui","masomenos","triste","preocupado","cansado"];
+
+function faceSVG(id){
+  const f = {
+    feliz:`<ellipse class="f-cheek" cx="30" cy="60" rx="7" ry="4"/><ellipse class="f-cheek" cx="70" cy="60" rx="7" ry="4"/>
+           <circle class="f-dot" cx="36" cy="44" r="5"/><circle class="f-dot" cx="64" cy="44" r="5"/>
+           <path class="f-line" d="M31 60 Q50 80 69 60"/>`,
+    tranqui:`<ellipse class="f-cheek" cx="31" cy="60" rx="6" ry="3.5"/><ellipse class="f-cheek" cx="69" cy="60" rx="6" ry="3.5"/>
+           <circle class="f-dot" cx="36" cy="45" r="4.5"/><circle class="f-dot" cx="64" cy="45" r="4.5"/>
+           <path class="f-line" d="M37 62 Q50 72 63 62"/>`,
+    masomenos:`<circle class="f-dot" cx="36" cy="45" r="4.5"/><circle class="f-dot" cx="64" cy="45" r="4.5"/>
+           <path class="f-line" d="M37 65 L63 65"/>`,
+    triste:`<path class="f-line" d="M30 39 Q36 36 42 39"/><path class="f-line" d="M58 39 Q64 36 70 39"/>
+           <circle class="f-dot" cx="36" cy="48" r="4.5"/><circle class="f-dot" cx="64" cy="48" r="4.5"/>
+           <path class="f-line" d="M34 71 Q50 57 66 71"/>
+           <path class="f-drop" d="M36 53 c-3.2 5 -3.2 9.5 0 9.5 c3.2 0 3.2 -4.5 0 -9.5 z"/>`,
+    preocupado:`<path class="f-line" d="M30 37 L44 43"/><path class="f-line" d="M70 37 L56 43"/>
+           <circle class="f-dot" cx="37" cy="50" r="4.5"/><circle class="f-dot" cx="63" cy="50" r="4.5"/>
+           <path class="f-line" d="M34 67 Q42 61 50 67 T66 67"/>`,
+    cansado:`<path class="f-line" d="M30 46 Q36 51 42 46"/><path class="f-line" d="M58 46 Q64 51 70 46"/>
+           <path class="f-line" d="M33 54 L40 55" style="stroke-width:3;opacity:.5"/><path class="f-line" d="M60 55 L67 54" style="stroke-width:3;opacity:.5"/>
+           <path class="f-line" d="M40 67 Q50 71 60 67"/>`
+  };
+  return `<svg class="face-svg" viewBox="0 0 100 100" aria-hidden="true"><circle class="f-bg" cx="50" cy="50" r="46"/>${f[id]||""}</svg>`;
+}
+
+/* =====================================================================
+   4) BACKEND: Firebase real, con respaldo en localStorage (demo)
+   ===================================================================== */
+function createLocalBackend(){
+  const KU="nat26_users", KM="nat26_moods";
+  const read=(k)=>{try{return JSON.parse(localStorage.getItem(k)||"{}")}catch{return{}}};
+  const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+  let listeners=[];
+  const emit=()=>{const m=read(KM);listeners.forEach(l=>l.cb(Object.values(m).filter(x=>x.date===l.date)));};
+  window.addEventListener("storage",emit);
+  return {
+    mode:"local",
+    async getUser(uid){return read(KU)[uid]||null;},
+    async upsertUser(u){const us=read(KU);us[u.uid]={...us[u.uid],...u};write(KU,us);},
+    async saveMood(m){const ms=read(KM);ms[`${m.uid}_${m.date}`]={...m,updatedAtMs:Date.now()};write(KM,ms);emit();},
+    subscribeToday(date,cb){const l={date,cb};listeners.push(l);
+      cb(Object.values(read(KM)).filter(x=>x.date===date));
+      return ()=>{listeners=listeners.filter(x=>x!==l);};}
+  };
+}
+
+async function createFirebaseBackend(cfg){
+  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+  const { getFirestore, collection, doc, getDoc, setDoc, onSnapshot, query, where, serverTimestamp } =
+    await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  const db = getFirestore(initializeApp(cfg));
+  return {
+    mode:"firebase",
+    async getUser(uid){const s=await getDoc(doc(db,"users",uid));return s.exists()?s.data():null;},
+    async upsertUser(u){await setDoc(doc(db,"users",u.uid),u,{merge:true});},
+    async saveMood(m){await setDoc(doc(db,"moods",`${m.uid}_${m.date}`),{...m,updatedAt:serverTimestamp(),updatedAtMs:Date.now()},{merge:true});},
+    subscribeToday(date,cb){return onSnapshot(query(collection(db,"moods"),where("date","==",date)),s=>cb(s.docs.map(d=>d.data())));}
+  };
+}
+
+let backend;
+try { backend = USE_FIREBASE ? await createFirebaseBackend(firebaseConfig) : createLocalBackend(); }
+catch(err){ console.warn("Firebase no disponible, uso modo demo:",err); backend = createLocalBackend(); }
+
+/* =====================================================================
+   5) UTILIDADES
+   ===================================================================== */
+const $ = (s)=>document.querySelector(s);
+const normalize = (s)=>s.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+const hash = (p)=>p?btoa(unescape(encodeURIComponent("nat26·"+p))):"";
+const todayKey = ()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;};
+const fmtDate = ()=>new Date().toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
+const BORDOS = ["#762434","#5f1c2a","#8c3344","#491521","#a55a64"];
+const pickColor = (uid)=>BORDOS[[...uid].reduce((a,c)=>a+c.charCodeAt(0),0)%BORDOS.length];
+const initials = (name)=>name.trim().split(/\s+/).slice(0,2).map(w=>w[0]?.toUpperCase()||"").join("");
+const fmtTime = (ms)=>ms?new Date(ms).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"}):"";
+
+function toast(msg){const t=$("#toast");$("#toastText").textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),2600);}
+
+/* =====================================================================
+   6) HERO + GALERÍA (carga de fotos con respaldo elegante)
+   ===================================================================== */
+function setHeroTitle(){
+  const t=$("#heroTitle");
+  "Naturales".split("").forEach((ch,i)=>{const s=document.createElement("span");s.className="l";s.textContent=ch;s.style.animationDelay=(.35+i*.06)+"s";t.appendChild(s);});
+  const y=document.createElement("span");y.className="l year serif";y.textContent="'26";y.style.animationDelay="1.0s";t.appendChild(y);
+}
+function loadPhotos(){
+  return Promise.all(PHOTO_FILES.map(src=>new Promise(res=>{
+    const i=new Image();i.onload=()=>res(src);i.onerror=()=>res(null);i.src=src;
+  }))).then(list=>list.filter(Boolean));
+}
+function startHero(photos){
+  const hero=$("#hero"), box=$("#heroPhotos");
+  if(!photos.length){ return; } // queda el fondo bordó (no-photos)
+  hero.classList.remove("no-photos");
+  photos.forEach((src,i)=>{const img=document.createElement("img");img.src=src;img.alt="Promo Naturales 2026";if(i===0)img.classList.add("active");box.appendChild(img);});
+  $("#loginArtImg").src = photos[Math.min(1,photos.length-1)];
+  if(photos.length<2) return;
+  const imgs=[...box.children];let cur=0;
+  setInterval(()=>{imgs[cur].classList.remove("active");cur=(cur+1)%imgs.length;imgs[cur].classList.add("active");},5200);
+}
+function buildGallery(photos){
+  if(!photos.length) return;
+  $("#galeria").classList.remove("hidden");
+  const track=$("#galleryTrack");
+  [...photos,...photos].forEach(src=>{const img=document.createElement("img");img.src=src;img.alt="Promo Naturales 2026";track.appendChild(img);});
+}
+
+/* =====================================================================
+   7) ESTADO / SESIÓN
+   ===================================================================== */
+let currentUser = (()=>{try{return JSON.parse(localStorage.getItem("nat26_identity")||"null")}catch{return null}})();
+let unsub=null, selectedEmotion=null, composerTouched=false, prefilled=false;
+
+function setModeBadge(){
+  const b=$("#modeBadge"), t=$("#modeText");
+  if(backend.mode==="firebase"){b.classList.add("live");t.textContent="En vivo · compartido";}
+  else{t.textContent="Modo demo · solo este equipo";}
+}
+
+/* ---- LOGIN ---- */
+$("#loginForm").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const name=$("#nameInput").value.trim();
+  const pin=$("#pinInput").value.trim();
+  const err=$("#loginError");
+  err.textContent="";
+  if(name.length<2){err.textContent="Escribí tu nombre (al menos 2 letras).";return;}
+  const uid=normalize(name);
+  if(!uid){err.textContent="Ese nombre no es válido, probá otro.";return;}
+  const btn=$("#loginBtn");btn.disabled=true;btn.textContent="Entrando…";
+  try{
+    let user=await backend.getUser(uid);
+    if(user){
+      if(user.pinHash){
+        if(!pin){err.textContent="Esta persona protegió su usuario con un PIN. Ingresalo.";return;}
+        if(hash(pin)!==user.pinHash){err.textContent="PIN incorrecto.";return;}
+      }
+    }else{
+      user={uid,name,color:pickColor(uid),pinHash:pin?hash(pin):"",createdAt:Date.now()};
+      await backend.upsertUser(user);
+    }
+    currentUser={uid:user.uid,name:user.name,color:user.color,hasPin:!!user.pinHash};
+    localStorage.setItem("nat26_identity",JSON.stringify(currentUser));
+    enterApp();
+  }catch(ex){
+    console.error(ex);err.textContent="Hubo un problema al entrar. Probá de nuevo.";
+  }finally{
+    btn.disabled=false;btn.textContent="Entrar";
+  }
+});
+
+function enterApp(){
+  $("#loginCard").classList.add("hidden");
+  $("#board").classList.remove("hidden");
+  $("#navEnter").classList.add("hidden");
+  $("#navUser").classList.remove("hidden");
+  $("#navName").textContent=currentUser.name.split(" ")[0];
+  $("#navAv").textContent=initials(currentUser.name);
+  $("#navAv").style.background=currentUser.color;$("#navAv").style.color="var(--beige-50)";
+  $("#greet").textContent="Hola, "+currentUser.name.split(" ")[0];
+  $("#todayDate").textContent=fmtDate();
+  renderFaces();
+  composerTouched=false;prefilled=false;selectedEmotion=null;
+  if(unsub)unsub();
+  unsub=backend.subscribeToday(todayKey(),(moods)=>{
+    moods.sort((a,b)=>(b.updatedAtMs||0)-(a.updatedAtMs||0));
+    renderWall(moods);renderStats(moods);
+    const mine=moods.find(m=>m.uid===currentUser.uid);
+    if(mine&&!composerTouched&&!prefilled){
+      prefilled=true;selectEmotion(mine.emotion);
+      $("#commentInput").value=mine.comment||"";updateChar();
+      setStatus(`Hoy ya registraste: ${EMO[mine.emotion]?.label}. Podés cambiarlo cuando quieras.`);
+    }
+  });
+  document.getElementById("app").scrollIntoView({behavior:"smooth"});
+}
+
+function logout(){
+  if(unsub){unsub();unsub=null;}
+  currentUser=null;localStorage.removeItem("nat26_identity");
+  $("#board").classList.add("hidden");
+  $("#loginCard").classList.remove("hidden");
+  $("#navUser").classList.add("hidden");
+  $("#navEnter").classList.remove("hidden");
+  $("#nameInput").value="";$("#pinInput").value="";
+}
+$("#navLogout").addEventListener("click",logout);
+$("#navEnter").addEventListener("click",()=>document.getElementById("app").scrollIntoView({behavior:"smooth"}));
+$("#heroCta").addEventListener("click",()=>document.getElementById("app").scrollIntoView({behavior:"smooth"}));
+
+/* ---- COMPOSER ---- */
+function renderFaces(){
+  const box=$("#faces");box.innerHTML="";
+  EMO_ORDER.forEach((id,i)=>{
+    const b=document.createElement("button");b.type="button";b.className="face";b.dataset.id=id;
+    b.innerHTML=`<span class="face-ring float" style="animation-delay:${i*.4}s">${faceSVG(id)}</span><span class="lbl">${EMO[id].label}</span>`;
+    b.addEventListener("click",()=>{composerTouched=true;selectEmotion(id);setStatus("");});
+    box.appendChild(b);
+  });
+}
+function selectEmotion(id){
+  selectedEmotion=id;
+  document.querySelectorAll("#faces .face").forEach(f=>f.classList.toggle("is-selected",f.dataset.id===id));
+}
+function setStatus(msg,warn=false){const s=$("#composerStatus");s.textContent=msg;s.classList.toggle("warn",warn);}
+function updateChar(){$("#charCount").textContent=$("#commentInput").value.length;}
+$("#commentInput").addEventListener("input",()=>{composerTouched=true;updateChar();});
+
+$("#saveBtn").addEventListener("click", async ()=>{
+  if(!currentUser)return;
+  if(!selectedEmotion){setStatus("Elegí una carita para contar cómo te sentís.",true);return;}
+  const btn=$("#saveBtn");btn.disabled=true;btn.textContent="Guardando…";
+  try{
+    await backend.saveMood({
+      uid:currentUser.uid,name:currentUser.name,color:currentUser.color,
+      date:todayKey(),emotion:selectedEmotion,comment:$("#commentInput").value.trim().slice(0,160)
+    });
+    toast("Tu ánimo de hoy quedó guardado");
+    setStatus("Guardado. Gracias por contarlo.");
+  }catch(ex){console.error(ex);setStatus("No se pudo guardar. Revisá tu conexión.",true);}
+  finally{btn.disabled=false;btn.textContent="Guardar mi ánimo";}
+});
+
+/* ---- WALL + STATS ---- */
+function renderWall(moods){
+  $("#wallSkeleton").classList.add("hidden");
+  const wall=$("#wall");wall.classList.remove("hidden");
+  if(!moods.length){
+    wall.classList.add("hidden");
+    if(!$("#emptyState")){
+      const d=document.createElement("div");d.id="emptyState";d.className="state";
+      d.innerHTML=`<div class="ic">${faceSVG("tranqui")}</div><h4>Todavía nadie contó cómo viene hoy</h4><p>Sé la primera persona en dejar su ánimo. El curso te lee.</p>`;
+      $("#wallArea").appendChild(d);
+    }
+    return;
+  }
+  const old=$("#emptyState");if(old)old.remove();
+  wall.innerHTML="";
+  moods.forEach(m=>{
+    const card=document.createElement("article");
+    card.className="mood mood-enter"+(m.uid===currentUser?.uid?" mine":"");
+    const em=EMO[m.emotion]?.label||m.emotion;
+    card.innerHTML=`
+      <div class="mood-top">
+        <span class="mini">${faceSVG(m.emotion)}</span>
+        <span class="who">
+          <span class="nm">${escapeHTML(m.name||"Anónimo")}</span>
+          <span class="em">${escapeHTML(em)}</span>
+        </span>
+      </div>
+      ${m.comment?`<p class="cmt">${escapeHTML(m.comment)}</p>`:""}
+      <div class="time">${fmtTime(m.updatedAtMs)}</div>`;
+    wall.appendChild(card);
+  });
+}
+function renderStats(moods){
+  const box=$("#stats");
+  if(!moods.length){box.innerHTML="";return;}
+  const counts={};moods.forEach(m=>counts[m.emotion]=(counts[m.emotion]||0)+1);
+  box.innerHTML=EMO_ORDER.filter(id=>counts[id]).map(id=>
+    `<span class="stat"><span class="mini">${faceSVG(id)}</span><b>${counts[id]}</b> ${EMO[id].label}</span>`
+  ).join("");
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+/* =====================================================================
+   8) SCROLL REVEALS + NAV
+   ===================================================================== */
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+addEventListener("scroll",()=>{$("#nav").classList.toggle("scrolled",scrollY>40);},{passive:true});
+
+/* =====================================================================
+   9) ARRANQUE
+   ===================================================================== */
+setHeroTitle();
+setModeBadge();
+loadPhotos().then(photos=>{startHero(photos);buildGallery(photos);});
+if(currentUser){enterApp();}
+else{
+  $("#loginHint").textContent = backend.mode==="firebase"
+    ? "Primera vez: se crea tu usuario al entrar. Después entrás con el mismo nombre."
+    : "Estás en modo demo: los datos se guardan solo en este dispositivo hasta conectar Firebase.";
+}
+</script>
+
+<!--
+=========================================================================
+ CÓMO ACTIVAR EL MODO COMPARTIDO (Firebase) — 5 minutos, gratis
+=========================================================================
+ 1. Entrá a https://console.firebase.google.com y creá un proyecto
+    (poné "naturales26", desactivá Analytics si querés, es opcional).
+ 2. En el menú izquierdo: Compilación > Firestore Database > Crear base de
+    datos > Iniciar en MODO DE PRUEBA > elegí región > Habilitar.
+ 3. Volvé a "Descripción general del proyecto" (el engranaje > Configuración).
+    Bajá hasta "Tus apps" y tocá el ícono </> (Web). Registrá la app.
+ 4. Te va a mostrar un bloque "const firebaseConfig = { ... }".
+    Copiá esos 6 valores y reemplazalos arriba en este archivo
+    (donde dice PEGA_TU_API_KEY, etc.).
+ 5. Guardá, subí el archivo a GitHub y listo: la insignia dirá
+    "En vivo · compartido" y todos verán los ánimos de todos.
+
+ NOTA sobre el "modo de prueba": deja la base abierta por 30 días. Para el
+ curso alcanza. Si querés que dure, en Firestore > Reglas pegá esto:
+
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       match /{document=**} { allow read, write: if true; }
+     }
+   }
+
+ (Es una base pública pensada para el curso; el PIN es una traba simple,
+  no una seguridad fuerte. No pongas datos sensibles.)
+
+=========================================================================
+ CÓMO SUBIR LAS FOTOS
+=========================================================================
+ En GitHub: botón "Add file" > "Upload files". Arrastrá tus fotos y, en el
+ nombre, poné  fotos/foto1.jpg ,  fotos/foto2.jpg , etc. (eso crea la
+ carpeta "fotos"). Usá .jpg . Si querés más de 6, agregá los nombres en
+ la lista PHOTO_FILES de arriba.
+=========================================================================
+-->
+</body>
+</html>
