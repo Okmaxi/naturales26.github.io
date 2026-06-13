@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Naturales '26 — Mural de ánimo</title>
-<meta name="description" content="El mural de ánimo de la Promo 2026, curso de Naturales. Cada día contá cómo te sentís y mirá cómo está el curso." />
+<meta name="description" content="El mural de ánimo de la Promo. Cada día contá cómo te sentís y mirá cómo está el curso." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -249,6 +249,42 @@ textarea.input{resize:none;min-height:84px;line-height:1.5}
   background-size:200% 100%;animation:shimmer 1.5s infinite}
 @keyframes shimmer{to{background-position:-200% 0}}
 
+/* =========================== HISTORIAL / CALENDARIO =========================== */
+.hist-wrap{display:grid;grid-template-columns:minmax(290px,1.05fr) 1fr;gap:clamp(16px,2.4vw,34px);align-items:start}
+.cal-card{padding:clamp(18px,2.4vw,28px)}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.cal-label{font-size:1.25rem;font-weight:500;text-transform:capitalize;letter-spacing:-.01em}
+.cal-nav{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);color:var(--bordo-700);font-size:1.05rem;
+  display:grid;place-items:center;transition:background .3s var(--ease),transform .3s var(--ease)}
+.cal-nav:hover{background:rgba(118,36,52,.07)}
+.cal-nav:active{transform:scale(.92)}
+.cal-nav:disabled{opacity:.3;cursor:not-allowed}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-wd{text-align:center;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--bordo-400);padding:.2rem 0 .4rem}
+.cal-cell{position:relative;aspect-ratio:1;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:.92rem;font-weight:500;color:var(--bordo-700);border:1px solid transparent;background:rgba(255,255,255,.35);
+  transition:transform .3s var(--ease),background .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease);
+  animation:calfade .45s var(--ease) backwards}
+@keyframes calfade{from{opacity:0}to{opacity:1}}
+.cal-cell.empty{background:none;border:none;pointer-events:none;animation:none;opacity:1}
+.cal-cell:not(.empty):not(:disabled):hover{transform:translateY(-2px);background:rgba(255,255,255,.72)}
+.cal-cell:not(.empty):active{transform:scale(.95)}
+.cal-cell:disabled{opacity:.32;cursor:not-allowed}
+.cal-cell.today{border-color:var(--bordo-400)}
+.cal-cell.has{background:rgba(118,36,52,.1)}
+.cal-cell.sel{background:var(--bordo-600);color:var(--beige-50);box-shadow:0 12px 22px -12px rgba(118,36,52,.6);transform:translateY(-2px)}
+.cal-dot{width:6px;height:6px;border-radius:50%;background:var(--bordo-500);position:absolute;bottom:7px;left:50%;transform:translateX(-50%)}
+.cal-cell.sel .cal-dot{background:var(--beige-100)}
+.cal-legend{margin-top:1rem;display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--bordo-400)}
+.cal-legend .cal-dot{position:static;transform:none}
+.hist-panel{min-width:0}
+.hist-head{display:flex;align-items:baseline;gap:.6rem;margin-bottom:1rem}
+.hist-date{font-size:clamp(1.3rem,2.6vw,1.85rem);font-weight:500;text-transform:capitalize;letter-spacing:-.01em}
+#histList{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+@media (max-width:820px){
+  .hist-wrap{grid-template-columns:1fr}
+}
+
 /* =========================== GALERÍA =========================== */
 .gallery{padding-top:0}
 .marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
@@ -403,13 +439,38 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,8vh,90px)}
         <div class="wall hidden" id="wall"></div>
       </div>
     </div>
+
+    <!-- ============ HISTORIAL / CALENDARIO ============ -->
+    <div class="reveal" id="historial" style="margin-top:clamp(48px,9vh,100px)">
+      <div class="kicker">El registro</div>
+      <h3 class="h-section serif" style="font-size:clamp(1.9rem,4vw,3rem)">Calendario de ánimos</h3>
+      <p class="lead">Elegí un día y mirá cómo venía el curso. Todo lo que se carga queda guardado, día por día.</p>
+
+      <div class="hist-wrap" style="margin-top:2.2rem">
+        <div class="card cal-card">
+          <div class="cal-head">
+            <button class="cal-nav" id="calPrev" aria-label="Mes anterior">&#8592;</button>
+            <span class="cal-label serif" id="calLabel"></span>
+            <button class="cal-nav" id="calNext" aria-label="Mes siguiente">&#8594;</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="cal-legend"><span class="cal-dot"></span> Días con registros</div>
+        </div>
+
+        <div class="hist-panel">
+          <div class="hist-head"><span class="hist-date serif" id="histDate"></span></div>
+          <div class="stats" id="histStats"></div>
+          <div class="wall" id="histList" style="margin-top:1.2rem"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ============ GALERÍA ============ -->
 <section class="section gallery hidden" id="galeria">
   <div class="kicker">La promo</div>
-  <h2 class="h-section serif">Nosotros, todos juntos.</h2>
+  <h2 class="h-section serif">NATURALES 2026 🤍.</h2>
   <div class="marquee reveal" style="margin-top:2.4rem"><div class="marquee-track" id="galleryTrack"></div></div>
 </section>
 
@@ -503,13 +564,14 @@ function createLocalBackend(){
     async saveMood(m){const ms=read(KM);ms[`${m.uid}_${m.date}`]={...m,updatedAtMs:Date.now()};write(KM,ms);emit();},
     subscribeToday(date,cb){const l={date,cb};listeners.push(l);
       cb(Object.values(read(KM)).filter(x=>x.date===date));
-      return ()=>{listeners=listeners.filter(x=>x!==l);};}
+      return ()=>{listeners=listeners.filter(x=>x!==l);};},
+    async fetchMoodsRange(start,end){return Object.values(read(KM)).filter(x=>x.date>=start&&x.date<=end);}
   };
 }
 
 async function createFirebaseBackend(cfg){
   const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
-  const { getFirestore, collection, doc, getDoc, setDoc, onSnapshot, query, where, serverTimestamp } =
+  const { getFirestore, collection, doc, getDoc, getDocs, setDoc, onSnapshot, query, where, serverTimestamp } =
     await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
   const db = getFirestore(initializeApp(cfg));
   return {
@@ -517,7 +579,8 @@ async function createFirebaseBackend(cfg){
     async getUser(uid){const s=await getDoc(doc(db,"users",uid));return s.exists()?s.data():null;},
     async upsertUser(u){await setDoc(doc(db,"users",u.uid),u,{merge:true});},
     async saveMood(m){await setDoc(doc(db,"moods",`${m.uid}_${m.date}`),{...m,updatedAt:serverTimestamp(),updatedAtMs:Date.now()},{merge:true});},
-    subscribeToday(date,cb){return onSnapshot(query(collection(db,"moods"),where("date","==",date)),s=>cb(s.docs.map(d=>d.data())));}
+    subscribeToday(date,cb){return onSnapshot(query(collection(db,"moods"),where("date","==",date)),s=>cb(s.docs.map(d=>d.data())));},
+    async fetchMoodsRange(start,end){const s=await getDocs(query(collection(db,"moods"),where("date",">=",start),where("date","<=",end)));return s.docs.map(d=>d.data());}
   };
 }
 
@@ -637,6 +700,7 @@ function enterApp(){
       setStatus(`Hoy ya registraste: ${EMO[mine.emotion]?.label}. Podés cambiarlo cuando quieras.`);
     }
   });
+  startHistory();
   document.getElementById("app").scrollIntoView({behavior:"smooth"});
 }
 
@@ -682,11 +746,34 @@ $("#saveBtn").addEventListener("click", async ()=>{
     });
     toast("Tu ánimo de hoy quedó guardado");
     setStatus("Guardado. Gracias por contarlo.");
+    refreshCalendar();
   }catch(ex){console.error(ex);setStatus("No se pudo guardar. Revisá tu conexión.",true);}
   finally{btn.disabled=false;btn.textContent="Guardar mi ánimo";}
 });
 
-/* ---- WALL + STATS ---- */
+/* ---- WALL + STATS (helpers compartidos por "hoy" e "historial") ---- */
+function moodCardHTML(m){
+  const em=EMO[m.emotion]?.label||m.emotion;
+  const mine=m.uid===currentUser?.uid;
+  return `<article class="mood mood-enter${mine?" mine":""}">
+      <div class="mood-top">
+        <span class="mini">${faceSVG(m.emotion)}</span>
+        <span class="who">
+          <span class="nm">${escapeHTML(m.name||"Anónimo")}</span>
+          <span class="em">${escapeHTML(em)}</span>
+        </span>
+      </div>
+      ${m.comment?`<p class="cmt">${escapeHTML(m.comment)}</p>`:""}
+      <div class="time">${fmtTime(m.updatedAtMs)}</div>
+    </article>`;
+}
+function statsHTML(moods){
+  if(!moods.length) return "";
+  const counts={};moods.forEach(m=>counts[m.emotion]=(counts[m.emotion]||0)+1);
+  return EMO_ORDER.filter(id=>counts[id]).map(id=>
+    `<span class="stat"><span class="mini">${faceSVG(id)}</span><b>${counts[id]}</b> ${EMO[id].label}</span>`
+  ).join("");
+}
 function renderWall(moods){
   $("#wallSkeleton").classList.add("hidden");
   const wall=$("#wall");wall.classList.remove("hidden");
@@ -700,33 +787,80 @@ function renderWall(moods){
     return;
   }
   const old=$("#emptyState");if(old)old.remove();
-  wall.innerHTML="";
-  moods.forEach(m=>{
-    const card=document.createElement("article");
-    card.className="mood mood-enter"+(m.uid===currentUser?.uid?" mine":"");
-    const em=EMO[m.emotion]?.label||m.emotion;
-    card.innerHTML=`
-      <div class="mood-top">
-        <span class="mini">${faceSVG(m.emotion)}</span>
-        <span class="who">
-          <span class="nm">${escapeHTML(m.name||"Anónimo")}</span>
-          <span class="em">${escapeHTML(em)}</span>
-        </span>
-      </div>
-      ${m.comment?`<p class="cmt">${escapeHTML(m.comment)}</p>`:""}
-      <div class="time">${fmtTime(m.updatedAtMs)}</div>`;
-    wall.appendChild(card);
-  });
+  wall.innerHTML=moods.map(moodCardHTML).join("");
 }
-function renderStats(moods){
-  const box=$("#stats");
-  if(!moods.length){box.innerHTML="";return;}
-  const counts={};moods.forEach(m=>counts[m.emotion]=(counts[m.emotion]||0)+1);
-  box.innerHTML=EMO_ORDER.filter(id=>counts[id]).map(id=>
-    `<span class="stat"><span class="mini">${faceSVG(id)}</span><b>${counts[id]}</b> ${EMO[id].label}</span>`
-  ).join("");
-}
+function renderStats(moods){ $("#stats").innerHTML=statsHTML(moods); }
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+/* ---- CALENDARIO / REGISTRO HISTÓRICO ---- */
+const MES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const WD=["lun","mar","mié","jue","vie","sáb","dom"];
+let calYear=null, calMonth=null, calData={}, selDate=null;
+const ymd=(y,m,d)=>`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+function longDate(key){const [y,m,d]=key.split("-").map(Number);return new Date(y,m-1,d).toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});}
+
+async function loadMonth(y,m){
+  const start=ymd(y,m,1), end=ymd(y,m,new Date(y,m+1,0).getDate());
+  let moods=[];
+  try{ moods=await backend.fetchMoodsRange(start,end); }
+  catch(e){ console.error("No pude cargar el mes:",e); }
+  calData={};
+  moods.forEach(mo=>{(calData[mo.date]=calData[mo.date]||[]).push(mo);});
+}
+function renderCalendar(){
+  $("#calLabel").textContent=`${MES[calMonth]} ${calYear}`;
+  const grid=$("#calGrid");grid.innerHTML="";
+  WD.forEach(w=>{const h=document.createElement("div");h.className="cal-wd";h.textContent=w;grid.appendChild(h);});
+  const firstDow=(new Date(calYear,calMonth,1).getDay()+6)%7; // semana arranca lunes
+  const days=new Date(calYear,calMonth+1,0).getDate();
+  const today=todayKey();
+  for(let i=0;i<firstDow;i++){const e=document.createElement("div");e.className="cal-cell empty";grid.appendChild(e);}
+  for(let d=1;d<=days;d++){
+    const key=ymd(calYear,calMonth,d);
+    const list=calData[key]||[];
+    const cell=document.createElement("button");
+    cell.type="button";
+    cell.className="cal-cell"+(list.length?" has":"")+(key===today?" today":"")+(key===selDate?" sel":"");
+    cell.style.animationDelay=(d*14)+"ms";
+    if(key>today) cell.disabled=true; // sin días futuros
+    cell.innerHTML=`<span class="dn">${d}</span>${list.length?`<span class="cal-dot"></span>`:""}`;
+    cell.addEventListener("click",()=>selectDate(key));
+    grid.appendChild(cell);
+  }
+  const now=new Date();
+  $("#calNext").disabled=(calYear>now.getFullYear())||(calYear===now.getFullYear()&&calMonth>=now.getMonth());
+}
+function selectDate(key){
+  selDate=key;
+  renderCalendar();
+  const moods=(calData[key]||[]).slice().sort((a,b)=>(b.updatedAtMs||0)-(a.updatedAtMs||0));
+  $("#histDate").textContent=longDate(key);
+  $("#histStats").innerHTML=statsHTML(moods);
+  const box=$("#histList");
+  if(!moods.length){
+    box.innerHTML=`<div class="state"><div class="ic">${faceSVG("masomenos")}</div><h4>Sin registros este día</h4><p>Nadie cargó su ánimo este día.</p></div>`;
+    return;
+  }
+  box.innerHTML=moods.map(moodCardHTML).join("");
+}
+async function changeMonth(delta){
+  calMonth+=delta;
+  if(calMonth<0){calMonth=11;calYear--;}
+  if(calMonth>11){calMonth=0;calYear++;}
+  await loadMonth(calYear,calMonth);
+  renderCalendar();
+}
+function startHistory(){
+  const now=new Date();calYear=now.getFullYear();calMonth=now.getMonth();selDate=todayKey();
+  loadMonth(calYear,calMonth).then(()=>selectDate(selDate));
+}
+async function refreshCalendar(){
+  if(calYear==null)return;
+  await loadMonth(calYear,calMonth);
+  if(selDate) selectDate(selDate); else renderCalendar();
+}
+$("#calPrev").addEventListener("click",()=>changeMonth(-1));
+$("#calNext").addEventListener("click",()=>changeMonth(1));
 
 /* =====================================================================
    8) SCROLL REVEALS + NAV
