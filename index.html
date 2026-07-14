@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Naturales '26 — Mural de ánimo</title>
 <meta name="description" content="El mural de ánimo de la Promo. Cada día contá cómo te sentís y mirá cómo está el curso." />
+<meta name="theme-color" content="#762434" />
+<meta property="og:title" content="Naturales '26 — Mural de ánimo" />
+<meta property="og:description" content="El mural de ánimo de la Promo. Cada día contá cómo te sentís y mirá cómo está el curso." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23efe6d4'/%3E%3Ccircle cx='36' cy='44' r='6' fill='%23762434'/%3E%3Ccircle cx='64' cy='44' r='6' fill='%23762434'/%3E%3Cpath d='M31 60 Q50 80 69 60' fill='none' stroke='%23762434' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,6 +62,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 input,textarea{font-family:inherit}
 a{color:inherit}
 ::selection{background:var(--bordo-600);color:var(--beige-50)}
+:focus-visible{outline:2px solid var(--bordo-500);outline-offset:2px}
+.hero :focus-visible,.login-art :focus-visible,.lightbox :focus-visible{outline-color:var(--beige-100)}
 
 /* ---------- fondo: blobs orgánicos beige/bordó ---------- */
 .bg-field{position:fixed;inset:0;z-index:-2;overflow:hidden;background:
@@ -141,7 +148,7 @@ a{color:inherit}
 /* ---------- LOGIN ---------- */
 .app{display:grid;gap:clamp(28px,4vw,52px)}
 .card{background:linear-gradient(180deg,rgba(247,240,227,.9),rgba(239,230,212,.78));
-  border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);
+  border:1px solid var(--line);border-radius:30px;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.5),var(--shadow)}
 .login-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,3vw,40px);align-items:stretch}
 .login-art{position:relative;border-radius:30px;overflow:hidden;min-height:340px;
@@ -209,6 +216,26 @@ a{color:inherit}
 .comment-row label{font-size:.82rem;font-weight:600;color:var(--bordo-700)}
 textarea.input{resize:none;min-height:84px;line-height:1.5}
 .char{font-size:.74rem;color:var(--bordo-500);text-align:right}
+
+/* foto adjunta (opcional) */
+.attach-row{margin-top:1rem;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.attach-btn{display:inline-flex;align-items:center;gap:.55rem;padding:.62rem 1.15rem;border-radius:999px;font-size:.88rem;font-weight:600;
+  color:var(--bordo-700);border:1px dashed var(--bordo-400);background:rgba(255,255,255,.4);
+  transition:background .3s var(--ease),transform .3s var(--ease),border-color .3s var(--ease)}
+.attach-btn:hover{background:rgba(118,36,52,.07);border-color:var(--bordo-500)}
+.attach-btn:active{transform:scale(.97)}
+.attach-btn:disabled{opacity:.55;cursor:wait}
+.attach-btn svg{width:17px;height:17px;flex:none}
+.attach-hint{font-size:.76rem;color:var(--bordo-500);opacity:.85}
+.attach-preview{position:relative;display:none}
+.attach-preview.show{display:block;animation:popin .45s var(--ease)}
+.attach-preview img{width:86px;height:86px;object-fit:cover;border-radius:16px;border:1px solid var(--line);
+  box-shadow:0 12px 22px -14px rgba(51,16,26,.5);display:block}
+.attach-remove{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;font-size:.85rem;line-height:1;
+  background:var(--bordo-600);color:var(--beige-50);display:grid;place-items:center;
+  box-shadow:0 6px 12px -6px rgba(51,16,26,.6);transition:transform .3s var(--ease),background .3s}
+.attach-remove:hover{background:var(--bordo-700)}
+.attach-remove:active{transform:scale(.9)}
 .composer-actions{margin-top:1.4rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
 .composer-actions .btn-solid{margin-top:0}
 .composer-status{font-size:.86rem;color:var(--bordo-500)}
@@ -237,7 +264,15 @@ textarea.input{resize:none;min-height:84px;line-height:1.5}
 .mood .who .em{font-size:.8rem;color:var(--bordo-500)}
 .mood .cmt{margin-top:.9rem;font-size:.94rem;color:var(--ink);opacity:.9;
   border-top:1px dashed var(--line);padding-top:.8rem}
-.mood .time{margin-top:.7rem;font-size:.72rem;color:var(--bordo-400);letter-spacing:.04em}
+.mood .time{margin-top:.7rem;font-size:.72rem;color:var(--bordo-500);letter-spacing:.04em}
+.mood-photo{margin-top:.9rem;width:100%;aspect-ratio:4/3;border-radius:14px;overflow:hidden;border:1px solid var(--line);
+  display:block;padding:0;cursor:zoom-in;background:linear-gradient(100deg,rgba(216,198,168,.25) 30%,rgba(216,198,168,.55) 50%,rgba(216,198,168,.25) 70%);
+  background-size:200% 100%;animation:shimmer 1.5s infinite;transition:transform .35s var(--ease)}
+.mood-photo:hover{transform:scale(1.015)}
+.mood-photo:active{transform:scale(.985)}
+.mood-photo img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .6s var(--ease)}
+.mood-photo.loaded{animation:none;background:var(--beige-100)}
+.mood-photo.loaded img{opacity:1}
 .mood-enter{animation:popin .5s var(--ease)}
 @keyframes popin{from{opacity:0;transform:scale(.9) translateY(10px)}to{opacity:1;transform:none}}
 
@@ -260,7 +295,7 @@ textarea.input{resize:none;min-height:84px;line-height:1.5}
 .cal-nav:active{transform:scale(.92)}
 .cal-nav:disabled{opacity:.3;cursor:not-allowed}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.cal-wd{text-align:center;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--bordo-400);padding:.2rem 0 .4rem}
+.cal-wd{text-align:center;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--bordo-500);padding:.2rem 0 .4rem}
 .cal-cell{position:relative;aspect-ratio:1;border-radius:14px;display:flex;align-items:center;justify-content:center;
   font-size:.92rem;font-weight:500;color:var(--bordo-700);border:1px solid transparent;background:rgba(255,255,255,.35);
   transition:transform .3s var(--ease),background .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease);
@@ -275,7 +310,7 @@ textarea.input{resize:none;min-height:84px;line-height:1.5}
 .cal-cell.sel{background:var(--bordo-600);color:var(--beige-50);box-shadow:0 12px 22px -12px rgba(118,36,52,.6);transform:translateY(-2px)}
 .cal-dot{width:6px;height:6px;border-radius:50%;background:var(--bordo-500);position:absolute;bottom:7px;left:50%;transform:translateX(-50%)}
 .cal-cell.sel .cal-dot{background:var(--beige-100)}
-.cal-legend{margin-top:1rem;display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--bordo-400)}
+.cal-legend{margin-top:1rem;display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--bordo-500)}
 .cal-legend .cal-dot{position:static;transform:none}
 .hist-panel{min-width:0}
 .hist-head{display:flex;align-items:baseline;gap:.6rem;margin-bottom:1rem}
@@ -289,7 +324,8 @@ textarea.input{resize:none;min-height:84px;line-height:1.5}
 .gallery{padding-top:0}
 .marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.marquee-track{display:flex;gap:18px;width:max-content;animation:marquee 42s linear infinite}
+.marquee-track{display:flex;width:max-content;animation:marquee 42s linear infinite}
+.marquee-half{display:flex;gap:18px;padding-right:18px}
 .marquee:hover .marquee-track{animation-play-state:paused}
 .marquee-track img{height:clamp(180px,26vw,300px);border-radius:20px;object-fit:cover;border:1px solid var(--line)}
 @keyframes marquee{to{transform:translateX(-50%)}}
@@ -305,6 +341,21 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,8vh,90px)}
   padding:.85rem 1.3rem;border-radius:999px;font-weight:500;font-size:.92rem;box-shadow:var(--shadow);
   display:flex;align-items:center;gap:.6rem;transition:transform .5s var(--ease)}
 .toast.show{transform:translate(-50%,0)}
+
+/* =========================== LIGHTBOX =========================== */
+.lightbox{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:22px;
+  background:rgba(51,16,26,.9);backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .45s var(--ease),visibility .45s}
+.lightbox.open{opacity:1;visibility:visible;pointer-events:auto}
+.lightbox img{max-width:min(92vw,900px);max-height:82vh;border-radius:22px;border:1px solid rgba(247,240,227,.25);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.75);transform:scale(.94);transition:transform .45s var(--ease)}
+.lightbox.open img{transform:none}
+.lb-close{position:absolute;top:18px;right:18px;width:42px;height:42px;border-radius:50%;font-size:1.15rem;line-height:1;
+  background:rgba(247,240,227,.12);color:var(--beige-50);border:1px solid rgba(247,240,227,.3);display:grid;place-items:center;
+  transition:background .3s,transform .3s var(--ease)}
+.lb-close:hover{background:rgba(247,240,227,.22)}
+.lb-close:active{transform:scale(.92)}
+.lb-cap{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:var(--beige-200);font-size:.86rem;max-width:82vw;text-align:center}
 
 /* =========================== RESPONSIVE =========================== */
 @media (max-width:880px){
@@ -386,11 +437,11 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,8vh,90px)}
         </div>
         <div class="field" id="pinRow">
           <label for="pinInput">PIN (opcional)</label>
-          <input class="input" id="pinInput" type="password" inputmode="numeric" placeholder="4 dígitos, si querés protegerlo" maxlength="6" />
+          <input class="input" id="pinInput" type="password" inputmode="numeric" placeholder="4 a 6 números, si querés protegerlo" maxlength="6" />
           <span class="help">Si ya creaste tu usuario con PIN, ingresalo para entrar.</span>
         </div>
         <button class="btn-solid" type="submit" id="loginBtn">Entrar</button>
-        <div class="form-error" id="loginError"></div>
+        <div class="form-error" id="loginError" role="alert"></div>
         <p class="form-hint" id="loginHint"></p>
       </form>
     </div>
@@ -417,9 +468,22 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,8vh,90px)}
         <div class="char"><span id="charCount">0</span>/160</div>
       </div>
 
+      <div class="attach-row">
+        <input type="file" id="photoInput" accept="image/*" class="hidden" aria-hidden="true" tabindex="-1" />
+        <button type="button" class="attach-btn" id="attachBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="8.5" cy="10.5" r="1.7"/><path d="M21 15.5l-4.6-4.4L8.5 19"/></svg>
+          <span id="attachLbl">Adjuntar foto</span>
+        </button>
+        <div class="attach-preview" id="attachPreview">
+          <img id="attachImg" alt="Vista previa de tu foto" />
+          <button type="button" class="attach-remove" id="attachRemove" aria-label="Quitar la foto">&#215;</button>
+        </div>
+        <span class="attach-hint">Opcional &#183; se comprime sola antes de subirse</span>
+      </div>
+
       <div class="composer-actions">
         <button class="btn-solid" id="saveBtn">Guardar mi ánimo</button>
-        <span class="composer-status" id="composerStatus"></span>
+        <span class="composer-status" id="composerStatus" role="status" aria-live="polite"></span>
       </div>
     </div>
 
@@ -481,7 +545,13 @@ footer{border-top:1px solid var(--line);margin-top:clamp(40px,8vh,90px)}
   </div>
 </footer>
 
-<div class="toast" id="toast"><span id="toastText"></span></div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <button class="lb-close" id="lbClose" aria-label="Cerrar la foto">&#215;</button>
+  <img id="lbImg" alt="Foto ampliada" />
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastText"></span></div>
 
 <script type="module">
 /* =====================================================================
@@ -551,7 +621,7 @@ function faceSVG(id){
    4) BACKEND: Firebase real, con respaldo en localStorage (demo)
    ===================================================================== */
 function createLocalBackend(){
-  const KU="nat26_users", KM="nat26_moods";
+  const KU="nat26_users", KM="nat26_moods", KP="nat26_photos";
   const read=(k)=>{try{return JSON.parse(localStorage.getItem(k)||"{}")}catch{return{}}};
   const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
   let listeners=[];
@@ -565,22 +635,35 @@ function createLocalBackend(){
     subscribeToday(date,cb){const l={date,cb};listeners.push(l);
       cb(Object.values(read(KM)).filter(x=>x.date===date));
       return ()=>{listeners=listeners.filter(x=>x!==l);};},
-    async fetchMoodsRange(start,end){return Object.values(read(KM)).filter(x=>x.date>=start&&x.date<=end);}
+    async fetchMoodsRange(start,end){return Object.values(read(KM)).filter(x=>x.date>=start&&x.date<=end);},
+    async savePhoto(id,data){const ps=read(KP);ps[id]=data;write(KP,ps);},
+    async getPhoto(id){return read(KP)[id]||null;},
+    async deletePhoto(id){const ps=read(KP);delete ps[id];write(KP,ps);}
   };
 }
 
 async function createFirebaseBackend(cfg){
   const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
-  const { getFirestore, collection, doc, getDoc, getDocs, setDoc, onSnapshot, query, where, serverTimestamp } =
+  const { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
+    collection, doc, getDoc, getDocs, setDoc, deleteDoc, onSnapshot, query, where, serverTimestamp } =
     await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-  const db = getFirestore(initializeApp(cfg));
+  const app = initializeApp(cfg);
+  let db;
+  // caché persistente: el mural abre y muestra lo último aunque no haya internet
+  try{ db = initializeFirestore(app,{localCache:persistentLocalCache({tabManager:persistentMultipleTabManager()})}); }
+  catch(e){ console.warn("Sin caché offline:",e); db = getFirestore(app); }
   return {
     mode:"firebase",
     async getUser(uid){const s=await getDoc(doc(db,"users",uid));return s.exists()?s.data():null;},
     async upsertUser(u){await setDoc(doc(db,"users",u.uid),u,{merge:true});},
     async saveMood(m){await setDoc(doc(db,"moods",`${m.uid}_${m.date}`),{...m,updatedAt:serverTimestamp(),updatedAtMs:Date.now()},{merge:true});},
-    subscribeToday(date,cb){return onSnapshot(query(collection(db,"moods"),where("date","==",date)),s=>cb(s.docs.map(d=>d.data())));},
-    async fetchMoodsRange(start,end){const s=await getDocs(query(collection(db,"moods"),where("date",">=",start),where("date","<=",end)));return s.docs.map(d=>d.data());}
+    subscribeToday(date,cb,onError){return onSnapshot(query(collection(db,"moods"),where("date","==",date)),
+      s=>cb(s.docs.map(d=>d.data())),
+      err=>{console.error("Suscripción falló:",err);if(onError)onError(err);});},
+    async fetchMoodsRange(start,end){const s=await getDocs(query(collection(db,"moods"),where("date",">=",start),where("date","<=",end)));return s.docs.map(d=>d.data());},
+    async savePhoto(id,data){await setDoc(doc(db,"photos",id),{data,updatedAtMs:Date.now()});},
+    async getPhoto(id){const s=await getDoc(doc(db,"photos",id));return s.exists()?(s.data().data||null):null;},
+    async deletePhoto(id){await deleteDoc(doc(db,"photos",id));}
   };
 }
 
@@ -593,7 +676,16 @@ catch(err){ console.warn("Firebase no disponible, uso modo demo:",err); backend 
    ===================================================================== */
 const $ = (s)=>document.querySelector(s);
 const normalize = (s)=>s.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
-const hash = (p)=>p?btoa(unescape(encodeURIComponent("nat26·"+p))):"";
+const legacyHash = (p)=>p?btoa(unescape(encodeURIComponent("nat26·"+p))):""; // compat con PINs viejos
+async function hashPin(p){
+  if(!p)return "";
+  try{
+    const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("nat26·"+p));
+    return "s2_"+[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
+  }catch{ return legacyHash(p); } // por si el navegador no soporta crypto.subtle
+}
+/* orden por hora del servidor si existe (relojes de celulares no son confiables) */
+const tsOf=(m)=>(m&&m.updatedAt&&typeof m.updatedAt.toMillis==="function")?m.updatedAt.toMillis():((m&&m.updatedAtMs)||0);
 const todayKey = ()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;};
 const fmtDate = ()=>new Date().toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
 const BORDOS = ["#762434","#5f1c2a","#8c3344","#491521","#a55a64"];
@@ -624,13 +716,20 @@ function startHero(photos){
   $("#loginArtImg").src = photos[Math.min(1,photos.length-1)];
   if(photos.length<2) return;
   const imgs=[...box.children];let cur=0;
-  setInterval(()=>{imgs[cur].classList.remove("active");cur=(cur+1)%imgs.length;imgs[cur].classList.add("active");},5200);
+  setInterval(()=>{
+    if(document.hidden)return; // no gastar batería con la pestaña tapada
+    imgs[cur].classList.remove("active");cur=(cur+1)%imgs.length;imgs[cur].classList.add("active");
+  },5200);
 }
 function buildGallery(photos){
   if(!photos.length) return;
   $("#galeria").classList.remove("hidden");
   const track=$("#galleryTrack");
-  [...photos,...photos].forEach(src=>{const img=document.createElement("img");img.src=src;img.alt="Promo Naturales 2026";track.appendChild(img);});
+  // dos mitades idénticas para que el loop del marquee empalme sin saltos
+  const half=document.createElement("div");half.className="marquee-half";
+  photos.forEach(src=>{const img=document.createElement("img");img.src=src;img.alt="Promo Naturales 2026";half.appendChild(img);});
+  track.appendChild(half);
+  track.appendChild(half.cloneNode(true));
 }
 
 /* =====================================================================
@@ -638,6 +737,7 @@ function buildGallery(photos){
    ===================================================================== */
 let currentUser = (()=>{try{return JSON.parse(localStorage.getItem("nat26_identity")||"null")}catch{return null}})();
 let unsub=null, selectedEmotion=null, composerTouched=false, prefilled=false;
+let boardDate=null, knownWallIds=new Set();
 
 function setModeBadge(){
   const b=$("#modeBadge"), t=$("#modeText");
@@ -661,11 +761,27 @@ $("#loginForm").addEventListener("submit", async (e)=>{
     if(user){
       if(user.pinHash){
         if(!pin){err.textContent="Esta persona protegió su usuario con un PIN. Ingresalo.";return;}
-        if(hash(pin)!==user.pinHash){err.textContent="PIN incorrecto.";return;}
+        const ok=(await hashPin(pin))===user.pinHash||legacyHash(pin)===user.pinHash;
+        if(!ok){err.textContent="PIN incorrecto.";return;}
+        // si el PIN estaba guardado con el formato viejo, lo actualizamos al seguro
+        if(legacyHash(pin)===user.pinHash){
+          const nh=await hashPin(pin);
+          if(nh!==user.pinHash)backend.upsertUser({uid:user.uid,pinHash:nh}).catch(()=>{});
+        }
+      }else if(pin){
+        // usuario existente sin PIN que escribió uno: se lo agregamos
+        if(!/^\d{4,6}$/.test(pin)){err.textContent="El PIN tiene que ser de 4 a 6 números.";return;}
+        user.pinHash=await hashPin(pin);
+        await backend.upsertUser({uid:user.uid,pinHash:user.pinHash});
+        toast("Tu usuario quedó protegido con PIN.");
+      }else{
+        toast(`Hola de nuevo, ${user.name.split(" ")[0]}`);
       }
     }else{
-      user={uid,name,color:pickColor(uid),pinHash:pin?hash(pin):"",createdAt:Date.now()};
+      if(pin&&!/^\d{4,6}$/.test(pin)){err.textContent="El PIN tiene que ser de 4 a 6 números.";return;}
+      user={uid,name,color:pickColor(uid),pinHash:pin?await hashPin(pin):"",createdAt:Date.now()};
       await backend.upsertUser(user);
+      toast(pin?"Listo: tu usuario quedó creado y protegido con PIN.":"Listo: tu usuario quedó creado.");
     }
     currentUser={uid:user.uid,name:user.name,color:user.color,hasPin:!!user.pinHash};
     localStorage.setItem("nat26_identity",JSON.stringify(currentUser));
@@ -686,22 +802,47 @@ function enterApp(){
   $("#navAv").textContent=initials(currentUser.name);
   $("#navAv").style.background=currentUser.color;$("#navAv").style.color="var(--beige-50)";
   $("#greet").textContent="Hola, "+currentUser.name.split(" ")[0];
-  $("#todayDate").textContent=fmtDate();
   renderFaces();
+  startToday();
+  startHistory();
+  document.getElementById("app").scrollIntoView({behavior:"smooth"});
+}
+
+/* arma (o re-arma) la vista del día: se llama al entrar y cuando cambia la fecha */
+function startToday(){
+  boardDate=todayKey();
+  $("#todayDate").textContent=fmtDate();
   composerTouched=false;prefilled=false;selectedEmotion=null;
+  document.querySelectorAll("#faces .face").forEach(f=>{f.classList.remove("is-selected");f.setAttribute("aria-pressed","false");});
+  photo={mode:"none",data:null};setAttachPreview(null);
+  $("#commentInput").value="";updateChar();setStatus("");
+  knownWallIds=new Set();
   if(unsub)unsub();
-  unsub=backend.subscribeToday(todayKey(),(moods)=>{
-    moods.sort((a,b)=>(b.updatedAtMs||0)-(a.updatedAtMs||0));
+  unsub=backend.subscribeToday(boardDate,(moods)=>{
+    moods.sort((a,b)=>tsOf(b)-tsOf(a));
     renderWall(moods);renderStats(moods);
     const mine=moods.find(m=>m.uid===currentUser.uid);
     if(mine&&!composerTouched&&!prefilled){
       prefilled=true;selectEmotion(mine.emotion);
       $("#commentInput").value=mine.comment||"";updateChar();
+      if(mine.hasPhoto){
+        photo={mode:"existing",data:null};
+        getPhotoCached(`${currentUser.uid}_${boardDate}`).then(d=>{
+          if(d&&photo.mode==="existing"){photo.data=d;setAttachPreview(d);}
+        });
+      }
       setStatus(`Hoy ya registraste: ${EMO[mine.emotion]?.label}. Podés cambiarlo cuando quieras.`);
     }
-  });
-  startHistory();
-  document.getElementById("app").scrollIntoView({behavior:"smooth"});
+    // mantiene el puntito de "hoy" del calendario al día cuando otros guardan
+    if(calYear!=null&&boardDate.slice(0,7)===`${calYear}-${String(calMonth+1).padStart(2,"0")}`){
+      const prev=(calData[boardDate]||[]).length;
+      calData[boardDate]=moods.slice();
+      if(prev!==moods.length){
+        renderCalendar();
+        if(selDate===boardDate)renderHistPanel(boardDate);
+      }
+    }
+  },()=>{ showWallError(); });
 }
 
 function logout(){
@@ -722,6 +863,7 @@ function renderFaces(){
   const box=$("#faces");box.innerHTML="";
   EMO_ORDER.forEach((id,i)=>{
     const b=document.createElement("button");b.type="button";b.className="face";b.dataset.id=id;
+    b.setAttribute("aria-pressed","false");
     b.innerHTML=`<span class="face-ring float" style="animation-delay:${i*.4}s">${faceSVG(id)}</span><span class="lbl">${EMO[id].label}</span>`;
     b.addEventListener("click",()=>{composerTouched=true;selectEmotion(id);setStatus("");});
     box.appendChild(b);
@@ -729,33 +871,128 @@ function renderFaces(){
 }
 function selectEmotion(id){
   selectedEmotion=id;
-  document.querySelectorAll("#faces .face").forEach(f=>f.classList.toggle("is-selected",f.dataset.id===id));
+  document.querySelectorAll("#faces .face").forEach(f=>{
+    const on=f.dataset.id===id;
+    f.classList.toggle("is-selected",on);
+    f.setAttribute("aria-pressed",on?"true":"false");
+  });
 }
 function setStatus(msg,warn=false){const s=$("#composerStatus");s.textContent=msg;s.classList.toggle("warn",warn);}
 function updateChar(){$("#charCount").textContent=$("#commentInput").value.length;}
 $("#commentInput").addEventListener("input",()=>{composerTouched=true;updateChar();});
 
+/* ---- FOTO ADJUNTA (opcional) ---- */
+let photo={mode:"none",data:null}; // none | new | existing
+
+async function compressImage(file){
+  if(!file.type||!file.type.startsWith("image/"))throw new Error("TIPO");
+  if(file.size>12*1024*1024)throw new Error("PESO");
+  const url=URL.createObjectURL(file);
+  let img;
+  try{
+    img=await new Promise((res,rej)=>{
+      const i=new Image();
+      i.onload=()=>res(i);
+      i.onerror=()=>rej(new Error("TIPO"));
+      i.src=url;
+    });
+  }finally{ URL.revokeObjectURL(url); }
+  const w=img.naturalWidth,h=img.naturalHeight;
+  if(!w||!h)throw new Error("TIPO");
+  const canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");
+  let scale=Math.min(1,1000/Math.max(w,h)),out="";
+  for(const q of[0.8,0.66,0.52,0.4]){
+    canvas.width=Math.max(1,Math.round(w*scale));
+    canvas.height=Math.max(1,Math.round(h*scale));
+    ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    out=canvas.toDataURL("image/jpeg",q);
+    if(out.length<600000)break;   // listo: entra cómodo en un doc de Firestore
+    scale*=0.8;                   // si no, achicamos y probamos de nuevo
+  }
+  if(!out||out.length>=900000)throw new Error("PESO");
+  return out;
+}
+function setAttachPreview(data){
+  const p=$("#attachPreview");
+  if(data){$("#attachImg").src=data;p.classList.add("show");$("#attachLbl").textContent="Cambiar foto";}
+  else{p.classList.remove("show");$("#attachImg").removeAttribute("src");$("#attachLbl").textContent="Adjuntar foto";}
+}
+$("#attachBtn").addEventListener("click",()=>$("#photoInput").click());
+$("#photoInput").addEventListener("change",async(e)=>{
+  const file=e.target.files&&e.target.files[0];
+  e.target.value=""; // permite volver a elegir el mismo archivo
+  if(!file)return;
+  composerTouched=true;
+  const btn=$("#attachBtn");
+  btn.disabled=true;$("#attachLbl").textContent="Procesando…";
+  try{
+    const data=await compressImage(file);
+    photo={mode:"new",data};
+    setAttachPreview(data);
+    setStatus("");
+  }catch(ex){
+    setAttachPreview(photo.data||null);
+    setStatus(ex&&ex.message==="TIPO"
+      ?"Ese archivo no parece una foto compatible. Probá con una imagen JPG o PNG."
+      :"No se pudo procesar esa foto. Probá con otra más liviana.",true);
+  }finally{btn.disabled=false;}
+});
+$("#attachRemove").addEventListener("click",()=>{
+  composerTouched=true;
+  photo={mode:"none",data:null};
+  setAttachPreview(null);
+  setStatus("");
+});
+
 $("#saveBtn").addEventListener("click", async ()=>{
   if(!currentUser)return;
   if(!selectedEmotion){setStatus("Elegí una carita para contar cómo te sentís.",true);return;}
+  if(boardDate&&todayKey()!==boardDate){startToday();refreshCalendar();} // por si pasó la medianoche
   const btn=$("#saveBtn");btn.disabled=true;btn.textContent="Guardando…";
-  try{
+  const day=todayKey(), pid=`${currentUser.uid}_${day}`;
+  const hasPhoto=photo.mode!=="none";
+  const doSave=async()=>{
+    if(photo.mode==="new"){
+      await backend.savePhoto(pid,photo.data);
+      photoCache.set(pid,photo.data);
+    }
+    if(!hasPhoto){photoCache.delete(pid);backend.deletePhoto(pid).catch(()=>{});}
     await backend.saveMood({
       uid:currentUser.uid,name:currentUser.name,color:currentUser.color,
-      date:todayKey(),emotion:selectedEmotion,comment:$("#commentInput").value.trim().slice(0,160)
+      date:day,emotion:selectedEmotion,comment:$("#commentInput").value.trim().slice(0,160),
+      hasPhoto
     });
-    toast("Tu ánimo de hoy quedó guardado");
-    setStatus("Guardado. Gracias por contarlo.");
-    refreshCalendar();
-  }catch(ex){console.error(ex);setStatus("No se pudo guardar. Revisá tu conexión.",true);}
+  };
+  try{
+    // si no hay internet, Firestore deja el guardado en cola: avisamos en vez de colgarnos
+    const p=doSave();
+    const result=await Promise.race([p.then(()=>"ok"),new Promise(r=>setTimeout(()=>r("timeout"),8000))]);
+    if(photo.mode==="new")photo={mode:"existing",data:photo.data};
+    if(result==="timeout"){
+      p.catch(()=>{});
+      setStatus("Estás sin conexión: tu ánimo quedó anotado y se sube solo cuando vuelva internet.",true);
+    }else{
+      toast("Tu ánimo de hoy quedó guardado");
+      setStatus("Guardado. Gracias por contarlo.");
+      refreshCalendar();
+    }
+  }catch(ex){
+    console.error(ex);
+    if(ex&&(ex.name==="QuotaExceededError"||ex.code===22)){
+      setStatus("No queda espacio en este dispositivo para guardar la foto. Quitala y probá de nuevo.",true);
+    }else{
+      setStatus("No se pudo guardar. Revisá tu conexión.",true);
+    }
+  }
   finally{btn.disabled=false;btn.textContent="Guardar mi ánimo";}
 });
 
 /* ---- WALL + STATS (helpers compartidos por "hoy" e "historial") ---- */
-function moodCardHTML(m){
+function moodCardHTML(m,enter=true){
   const em=EMO[m.emotion]?.label||m.emotion;
   const mine=m.uid===currentUser?.uid;
-  return `<article class="mood mood-enter${mine?" mine":""}">
+  const pid=`${m.uid}_${m.date}`;
+  return `<article class="mood${enter?" mood-enter":""}${mine?" mine":""}">
       <div class="mood-top">
         <span class="mini">${faceSVG(m.emotion)}</span>
         <span class="who">
@@ -764,7 +1001,8 @@ function moodCardHTML(m){
         </span>
       </div>
       ${m.comment?`<p class="cmt">${escapeHTML(m.comment)}</p>`:""}
-      <div class="time">${fmtTime(m.updatedAtMs)}</div>
+      ${m.hasPhoto?`<button type="button" class="mood-photo" data-photo="${escapeHTML(pid)}" data-name="${escapeHTML(m.name||"")}" aria-label="Ver la foto de ${escapeHTML(m.name||"Anónimo")}"><img alt="" /></button>`:""}
+      <div class="time">${fmtTime(tsOf(m))}</div>
     </article>`;
 }
 function statsHTML(moods){
@@ -774,28 +1012,83 @@ function statsHTML(moods){
     `<span class="stat"><span class="mini">${faceSVG(id)}</span><b>${counts[id]}</b> ${EMO[id].label}</span>`
   ).join("");
 }
+function stateBox(){
+  let d=$("#emptyState");
+  if(!d){d=document.createElement("div");d.id="emptyState";d.className="state";$("#wallArea").appendChild(d);}
+  return d;
+}
+function showWallError(){
+  $("#wallSkeleton").classList.add("hidden");
+  const wall=$("#wall");wall.classList.add("hidden");wall.innerHTML="";
+  stateBox().innerHTML=`<div class="ic">${faceSVG("preocupado")}</div><h4>No se pudo conectar</h4><p>Revisá tu internet y recargá la página. Si sigue igual, avisale a quien administra el mural.</p>`;
+}
 function renderWall(moods){
   $("#wallSkeleton").classList.add("hidden");
   const wall=$("#wall");wall.classList.remove("hidden");
   if(!moods.length){
-    wall.classList.add("hidden");
-    if(!$("#emptyState")){
-      const d=document.createElement("div");d.id="emptyState";d.className="state";
-      d.innerHTML=`<div class="ic">${faceSVG("tranqui")}</div><h4>Todavía nadie contó cómo viene hoy</h4><p>Sé la primera persona en dejar su ánimo. El curso te lee.</p>`;
-      $("#wallArea").appendChild(d);
-    }
+    knownWallIds=new Set();
+    wall.classList.add("hidden");wall.innerHTML="";
+    stateBox().innerHTML=`<div class="ic">${faceSVG("tranqui")}</div><h4>Todavía nadie contó cómo viene hoy</h4><p>Sé la primera persona en dejar su ánimo. El curso te lee.</p>`;
     return;
   }
   const old=$("#emptyState");if(old)old.remove();
-  wall.innerHTML=moods.map(moodCardHTML).join("");
+  // solo animan la entrada las tarjetas nuevas (no todo el mural en cada cambio)
+  wall.innerHTML=moods.map(m=>moodCardHTML(m,!knownWallIds.has(`${m.uid}_${m.date}`))).join("");
+  knownWallIds=new Set(moods.map(m=>`${m.uid}_${m.date}`));
+  hydratePhotos(wall);
 }
 function renderStats(moods){ $("#stats").innerHTML=statsHTML(moods); }
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
+/* ---- fotos de las tarjetas (carga bajo demanda + caché) ---- */
+const photoCache=new Map();
+async function getPhotoCached(id){
+  if(photoCache.has(id))return photoCache.get(id);
+  const raw=await backend.getPhoto(id).catch(()=>undefined);
+  if(raw===undefined)return null; // error de red: no cachear, se reintenta después
+  const ok=(typeof raw==="string"&&raw.startsWith("data:image/"))?raw:null;
+  photoCache.set(id,ok);
+  return ok;
+}
+function hydratePhotos(root){
+  root.querySelectorAll(".mood-photo[data-photo]").forEach(btn=>{
+    const id=btn.dataset.photo,name=btn.dataset.name||"";
+    getPhotoCached(id).then(d=>{
+      if(!btn.isConnected)return;
+      if(!d){btn.remove();return;}
+      const img=btn.querySelector("img");
+      img.onload=()=>btn.classList.add("loaded");
+      img.src=d;
+      if(img.complete)btn.classList.add("loaded");
+      btn.addEventListener("click",()=>openLightbox(d,name));
+    });
+  });
+}
+
+/* ---- lightbox ---- */
+let lbLastFocus=null;
+function openLightbox(src,name){
+  $("#lbImg").src=src;
+  $("#lbCap").textContent=name?`Foto de ${name}`:"";
+  $("#lightbox").classList.add("open");
+  document.body.style.overflow="hidden";
+  lbLastFocus=document.activeElement;
+  $("#lbClose").focus();
+}
+function closeLightbox(){
+  $("#lightbox").classList.remove("open");
+  document.body.style.overflow="";
+  if(lbLastFocus&&lbLastFocus.focus)lbLastFocus.focus();
+  lbLastFocus=null;
+}
+$("#lbClose").addEventListener("click",closeLightbox);
+$("#lightbox").addEventListener("click",(e)=>{if(e.target===e.currentTarget)closeLightbox();});
+addEventListener("keydown",(e)=>{if(e.key==="Escape"&&$("#lightbox").classList.contains("open"))closeLightbox();});
+
 /* ---- CALENDARIO / REGISTRO HISTÓRICO ---- */
 const MES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
 const WD=["lun","mar","mié","jue","vie","sáb","dom"];
-let calYear=null, calMonth=null, calData={}, selDate=null;
+let calYear=null, calMonth=null, calData={}, selDate=null, monthSeq=0;
 const ymd=(y,m,d)=>`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
 function longDate(key){const [y,m,d]=key.split("-").map(Number);return new Date(y,m-1,d).toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});}
 
@@ -823,6 +1116,9 @@ function renderCalendar(){
     cell.className="cal-cell"+(list.length?" has":"")+(key===today?" today":"")+(key===selDate?" sel":"");
     cell.style.animationDelay=(d*14)+"ms";
     if(key>today) cell.disabled=true; // sin días futuros
+    cell.setAttribute("aria-label",`${d} de ${MES[calMonth]} de ${calYear}${key===today?", hoy":""}${list.length?", con registros":""}`);
+    cell.setAttribute("aria-pressed",key===selDate?"true":"false");
+    if(key===today)cell.setAttribute("aria-current","date");
     cell.innerHTML=`<span class="dn">${d}</span>${list.length?`<span class="cal-dot"></span>`:""}`;
     cell.addEventListener("click",()=>selectDate(key));
     grid.appendChild(cell);
@@ -830,10 +1126,8 @@ function renderCalendar(){
   const now=new Date();
   $("#calNext").disabled=(calYear>now.getFullYear())||(calYear===now.getFullYear()&&calMonth>=now.getMonth());
 }
-function selectDate(key){
-  selDate=key;
-  renderCalendar();
-  const moods=(calData[key]||[]).slice().sort((a,b)=>(b.updatedAtMs||0)-(a.updatedAtMs||0));
+function renderHistPanel(key){
+  const moods=(calData[key]||[]).slice().sort((a,b)=>tsOf(b)-tsOf(a));
   $("#histDate").textContent=longDate(key);
   $("#histStats").innerHTML=statsHTML(moods);
   const box=$("#histList");
@@ -841,22 +1135,36 @@ function selectDate(key){
     box.innerHTML=`<div class="state"><div class="ic">${faceSVG("masomenos")}</div><h4>Sin registros este día</h4><p>Nadie cargó su ánimo este día.</p></div>`;
     return;
   }
-  box.innerHTML=moods.map(moodCardHTML).join("");
+  box.innerHTML=moods.map(m=>moodCardHTML(m)).join("");
+  hydratePhotos(box);
+}
+function selectDate(key){
+  selDate=key;
+  renderCalendar();
+  renderHistPanel(key);
 }
 async function changeMonth(delta){
   calMonth+=delta;
   if(calMonth<0){calMonth=11;calYear--;}
   if(calMonth>11){calMonth=0;calYear++;}
+  // evita que clicks rápidos disparen cargas en paralelo que se pisen
+  $("#calPrev").disabled=true;$("#calNext").disabled=true;
+  const seq=++monthSeq;
   await loadMonth(calYear,calMonth);
+  if(seq!==monthSeq)return;
+  $("#calPrev").disabled=false;
   renderCalendar();
 }
 function startHistory(){
   const now=new Date();calYear=now.getFullYear();calMonth=now.getMonth();selDate=todayKey();
-  loadMonth(calYear,calMonth).then(()=>selectDate(selDate));
+  const seq=++monthSeq;
+  loadMonth(calYear,calMonth).then(()=>{if(seq===monthSeq)selectDate(selDate);});
 }
 async function refreshCalendar(){
   if(calYear==null)return;
+  const seq=++monthSeq;
   await loadMonth(calYear,calMonth);
+  if(seq!==monthSeq)return;
   if(selDate) selectDate(selDate); else renderCalendar();
 }
 $("#calPrev").addEventListener("click",()=>changeMonth(-1));
@@ -874,6 +1182,14 @@ addEventListener("scroll",()=>{$("#nav").classList.toggle("scrolled",scrollY>40)
    ===================================================================== */
 setHeroTitle();
 setModeBadge();
+if(USE_FIREBASE&&backend.mode==="local"){toast("No se pudo conectar al servidor. Por ahora los datos quedan solo en este dispositivo.");}
+addEventListener("offline",()=>toast("Sin conexión. Lo que guardes se sube solo cuando vuelva internet."));
+addEventListener("online",()=>toast("Volvió la conexión."));
+/* si la pestaña queda abierta pasada la medianoche, re-arma el mural del día nuevo */
+setInterval(()=>{if(currentUser&&boardDate&&todayKey()!==boardDate){startToday();refreshCalendar();}},60000);
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden&&currentUser&&boardDate&&todayKey()!==boardDate){startToday();refreshCalendar();}
+});
 loadPhotos().then(photos=>{startHero(photos);buildGallery(photos);});
 if(currentUser){enterApp();}
 else{
@@ -905,12 +1221,40 @@ else{
    rules_version = '2';
    service cloud.firestore {
      match /databases/{database}/documents {
-       match /{document=**} { allow read, write: if true; }
+       match /users/{id} {
+         allow read, create, update: if true;
+         allow delete: if false;
+       }
+       match /moods/{id} {
+         allow read: if true;
+         allow create, update: if
+           request.resource.data.name is string &&
+           request.resource.data.name.size() <= 40 &&
+           request.resource.data.comment is string &&
+           request.resource.data.comment.size() <= 300 &&
+           request.resource.data.emotion is string &&
+           request.resource.data.emotion.size() <= 20;
+         allow delete: if false;
+       }
+       match /photos/{id} {
+         allow read, delete: if true;
+         allow create, update: if
+           request.resource.data.data is string &&
+           request.resource.data.data.size() < 1000000;
+       }
      }
    }
 
+ Estas reglas validan que nadie pueda meter textos gigantes ni borrar los
+ registros de los demás. Siguen siendo públicas (sin login real), pero
+ cortan los abusos más fáciles.
+
  (Es una base pública pensada para el curso; el PIN es una traba simple,
   no una seguridad fuerte. No pongas datos sensibles.)
+
+ NOTA sobre las fotos de los comentarios: se comprimen en el navegador y
+ se guardan en la colección "photos" de Firestore. No hay que activar nada
+ extra en Firebase; las reglas de arriba ya las cubren.
 
 =========================================================================
  CÓMO SUBIR LAS FOTOS
